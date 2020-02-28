@@ -15,6 +15,7 @@
 		5912180C2407DAB20056A350 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5912180A2407DAB20056A350 /* LaunchScreen.storyboard */; };
 		591218172407DAB20056A350 /* Camera_PhotoLibraryTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591218162407DAB20056A350 /* Camera_PhotoLibraryTestTests.swift */; };
 		591218222407DAB20056A350 /* Camera_PhotoLibraryTestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591218212407DAB20056A350 /* Camera_PhotoLibraryTestUITests.swift */; };
+		59A7BA302408AD6A003DD9AC /* Storyboard+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A7BA2F2408AD6A003DD9AC /* Storyboard+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		5912181D2407DAB20056A350 /* Camera&PhotoLibraryTestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Camera&PhotoLibraryTestUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		591218212407DAB20056A350 /* Camera_PhotoLibraryTestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera_PhotoLibraryTestUITests.swift; sourceTree = "<group>"; };
 		591218232407DAB20056A350 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		59A7BA2F2408AD6A003DD9AC /* Storyboard+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Storyboard+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				591217FF2407DAAF0056A350 /* AppDelegate.swift */,
+				59A7BA2F2408AD6A003DD9AC /* Storyboard+Extension.swift */,
 				591218012407DAAF0056A350 /* SceneDelegate.swift */,
 				591218032407DAAF0056A350 /* ViewController.swift */,
 				591218052407DAAF0056A350 /* Main.storyboard */,
@@ -261,6 +264,7 @@
 			files = (
 				591218042407DAAF0056A350 /* ViewController.swift in Sources */,
 				591218002407DAAF0056A350 /* AppDelegate.swift in Sources */,
+				59A7BA302408AD6A003DD9AC /* Storyboard+Extension.swift in Sources */,
 				591218022407DAAF0056A350 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

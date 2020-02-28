@@ -9,29 +9,57 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    let disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
     
-    
-
-    @IBAction func choosePhotoButton(_ sender: Any) {
-        let actionSheet: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let tappedCamera = UIAlertAction(title: "ライブラリから選択する", style: .default) { (UIAlertAction) in
-            //何か処理
+    override func viewWillAppear(_ animated: Bool) {
+        if imageView.image != nil {
+            placeHolderMessageLabel.isHidden = true
+        }else {
+            placeHolderMessageLabel.isHidden = false
         }
-        let tappedLibrary = UIAlertAction(title: "カメラで撮影する", style: .default) { (UIAlertAction) in
-            //何か処理
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setSwipeBack()
+        
+        //other
+        backButton.rx.tap.subscribe{ _ in
+            self.navigationController?.popViewController(animated: true)
+        }.disposed(by: disposeBag)
+        quitButton.rx.tap.subscribe{ _ in
+            self.dismiss(animated: true, completion: nil)
+        }.disposed(by: disposeBag)
+        uploadButton.rx.tap.subscribe{ _ in
+            self.showActionSheet()
+        }.disposed(by: disposeBag)
+        toCheckPageButton.rx.tap.subscribe{ _ in
+            //エビデンスが選択されていたら、確認ページに遷移
+        }.disposed(by: disposeBag)
+        
+    }
+    
+    func showActionSheet() {
+        let actionSheet: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let tappedLibrary = UIAlertAction(title: "ライブラリから選択する", style: .default) { (UIAlertAction) in
+            //ライブラリにアクセスする処理
+        }
+        let tappedCamera = UIAlertAction(title: "カメラで撮影する", style: .default) { (UIAlertAction) in
+            //カメラ起動する処理
         }
         let cancel = UIAlertAction(title: "キャンセル", style: .cancel) { (UIAlertAction) in
             //キャンセル
         }
-        actionSheet.addAction(tappedCamera)
         actionSheet.addAction(tappedLibrary)
+        actionSheet.addAction(tappedCamera)
         actionSheet.addAction(cancel)
-        
         self.present(actionSheet, animated: true, completion: nil)
     }
     

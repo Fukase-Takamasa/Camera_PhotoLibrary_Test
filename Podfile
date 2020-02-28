@@ -6,6 +6,10 @@ target 'Camera&PhotoLibraryTest' do
   use_frameworks!
 
   # Pods for Camera&PhotoLibraryTest
+  pod 'RxSwift'
+  pod 'RxCocoa'
+  pod 'Instantiate'
+  pod 'InstantiateStandard'
 
   target 'Camera&PhotoLibraryTestTests' do
     inherit! :search_paths

@@ -11,7 +11,17 @@ import UIKit
 class ViewController: UIViewController {
     
     let disposeBag = DisposeBag()
-
+    
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var quitButton: UIButton!
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var placeHolderMessageLabel: UILabel!
+    @IBOutlet weak var uploadButton: UIButton!
+    @IBOutlet weak var photoCountLabel: UILabel!
+    @IBOutlet weak var previousImageButton: UIButton!
+    @IBOutlet weak var nextImageButton: UIButton!
+    @IBOutlet weak var toCheckPageButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.

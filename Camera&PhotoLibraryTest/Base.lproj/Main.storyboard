@@ -18,17 +18,17 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="45Y-zl-bhh" kind="relationship" relationship="rootViewController" id="boH-aV-mdM"/>
+                        <segue destination="45Y-zl-bhh" kind="relationship" relationship="rootViewController" id="ew3-k1-8xb"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nd9-p7-8eH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="137.68115942028987" y="138.61607142857142"/>
         </scene>
-        <!--Upload Evidence Photo View Controller-->
+        <!--View Controller-->
         <scene sceneID="NIJ-T2-XWl">
             <objects>
-                <viewController id="45Y-zl-bhh" customClass="UploadEvidencePhotoViewController" customModule="Kurasel" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="45Y-zl-bhh" customClass="ViewController" customModule="Camera_PhotoLibraryTest" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aGm-Qc-MLJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -299,15 +299,15 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="backButton" destination="Xpa-l5-8nU" id="8iu-gf-bor"/>
-                        <outlet property="imageView" destination="Tvg-hi-9ze" id="Ayu-8s-f5c"/>
-                        <outlet property="nextPhotoButton" destination="VRw-hg-zwB" id="qmc-3V-VQ0"/>
-                        <outlet property="photoCountLabel" destination="7BB-ld-vzV" id="Cvx-g4-DhK"/>
-                        <outlet property="placeHolderMessageLabel" destination="0fJ-Zo-oKk" id="MLJ-UZ-Ivy"/>
-                        <outlet property="previousPhotoButton" destination="Pt8-AP-Pn3" id="liW-bi-6Ua"/>
-                        <outlet property="quitButton" destination="CEK-eN-EOx" id="rHt-Em-CA4"/>
-                        <outlet property="toCheckPageButton" destination="Cxo-Xc-iZc" id="6e2-UH-MXw"/>
-                        <outlet property="uploadButton" destination="5Iq-Be-Ydl" id="Ugf-oF-u4c"/>
+                        <outlet property="backButton" destination="Xpa-l5-8nU" id="uNf-No-m6o"/>
+                        <outlet property="imageView" destination="Tvg-hi-9ze" id="y1a-qX-h7V"/>
+                        <outlet property="nextImageButton" destination="VRw-hg-zwB" id="6O2-9M-3dJ"/>
+                        <outlet property="photoCountLabel" destination="7BB-ld-vzV" id="giq-LB-6kL"/>
+                        <outlet property="placeHolderMessageLabel" destination="0fJ-Zo-oKk" id="Ydq-bK-70A"/>
+                        <outlet property="previousImageButton" destination="Pt8-AP-Pn3" id="WJR-yA-POH"/>
+                        <outlet property="quitButton" destination="CEK-eN-EOx" id="W88-bU-Y94"/>
+                        <outlet property="toCheckPageButton" destination="Cxo-Xc-iZc" id="bzz-9O-Zpk"/>
+                        <outlet property="uploadButton" destination="5Iq-Be-Ydl" id="ihi-wC-2R2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qTJ-xc-gr7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -18,11 +18,11 @@ class ViewController: UIViewController {
     
 
     @IBAction func choosePhotoButton(_ sender: Any) {
-        let actionSheet: UIAlertController = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
-        let tappedCamera = UIAlertAction(title: "カメラで撮影する", style: .default) { (UIAlertAction) in
+        let actionSheet: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let tappedCamera = UIAlertAction(title: "ライブラリから選択する", style: .default) { (UIAlertAction) in
             //何か処理
         }
-        let tappedLibrary = UIAlertAction(title: "ライブラリから選択する", style: .default) { (UIAlertAction) in
+        let tappedLibrary = UIAlertAction(title: "カメラで撮影する", style: .default) { (UIAlertAction) in
             //何か処理
         }
         let cancel = UIAlertAction(title: "キャンセル", style: .cancel) { (UIAlertAction) in

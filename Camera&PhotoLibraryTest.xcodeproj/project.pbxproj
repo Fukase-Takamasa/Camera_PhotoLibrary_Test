@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -168,7 +168,6 @@
 				9F2B3474BE32EFEB9DE032A6 /* Pods-Camera&PhotoLibraryTestTests.debug.xcconfig */,
 				54B0A454FD1FB18A7BF398BF /* Pods-Camera&PhotoLibraryTestTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -589,7 +588,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = G8Q84RGJJC;
+				DEVELOPMENT_TEAM = 37MFDT4LMQ;
 				INFOPLIST_FILE = "Camera&PhotoLibraryTest/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -608,7 +607,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = G8Q84RGJJC;
+				DEVELOPMENT_TEAM = 37MFDT4LMQ;
 				INFOPLIST_FILE = "Camera&PhotoLibraryTest/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

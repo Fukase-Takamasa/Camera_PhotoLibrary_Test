@@ -25,7 +25,7 @@
             </objects>
             <point key="canvasLocation" x="137.68115942028987" y="138.61607142857142"/>
         </scene>
-        <!--View Controller-->
+        <!--画像のアップロード-->
         <scene sceneID="NIJ-T2-XWl">
             <objects>
                 <viewController id="45Y-zl-bhh" customClass="ViewController" customModule="Camera_PhotoLibraryTest" customModuleProvider="target" sceneMemberID="viewController">
@@ -98,21 +98,23 @@
                                                                             <constraint firstAttribute="width" constant="30" id="mjH-af-hjt"/>
                                                                         </constraints>
                                                                     </button>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kurasel_icon_chevron-left" translatesAutoresizingMaskIntoConstraints="NO" id="hiH-F6-qBa">
-                                                                        <rect key="frame" x="141.66666666666666" y="21.666666666666629" width="12" height="12"/>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.left.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="hiH-F6-qBa">
+                                                                        <rect key="frame" x="141.66666666666666" y="22.666666666666629" width="12" height="10.666666666666671"/>
+                                                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="12" id="hXJ-Du-dNR"/>
                                                                             <constraint firstAttribute="width" constant="12" id="izx-d0-Loy"/>
                                                                         </constraints>
                                                                     </imageView>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron" translatesAutoresizingMaskIntoConstraints="NO" id="RBe-VS-LSB">
-                                                                        <rect key="frame" x="221.66666666666666" y="21.666666666666629" width="12" height="12"/>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.right.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="RBe-VS-LSB">
+                                                                        <rect key="frame" x="221.66666666666666" y="22.666666666666629" width="12" height="10.666666666666671"/>
+                                                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="12" id="9DP-lF-CiG"/>
                                                                             <constraint firstAttribute="width" constant="12" id="dNA-XS-OjQ"/>
                                                                         </constraints>
                                                                     </imageView>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VRw-hg-zwB" userLabel="NextPhotoButton">
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VRw-hg-zwB" userLabel="NextPhotoButton">
                                                                         <rect key="frame" x="212.66666666666666" y="12.666666666666629" width="30" height="30"/>
                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
@@ -281,20 +283,24 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="cFW-oY-YzQ"/>
                     </view>
-                    <navigationItem key="navigationItem" id="0SV-lz-jKQ">
+                    <navigationItem key="navigationItem" title="画像のアップロード" id="0SV-lz-jKQ">
                         <barButtonItem key="leftBarButtonItem" style="plain" id="o55-gR-xR4">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Xpa-l5-8nU">
                                 <rect key="frame" x="16" y="1" width="32" height="42"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="kurasel_icon_chevron-left"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="chevron.left" catalog="system"/>
                             </button>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="TXy-J4-5ce">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="CEK-eN-EOx">
                                 <rect key="frame" x="312" y="0.66666666666666785" width="47" height="43"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="4" maxY="0.0"/>
-                                <state key="normal" image="kurasel_icon_X"/>
+                                <state key="normal" image="multiply" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="20" scale="large" weight="light"/>
+                                </state>
                             </button>
                         </barButtonItem>
                     </navigationItem>
@@ -316,9 +322,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="chevron" width="16" height="16"/>
-        <image name="kurasel_icon_X" width="16" height="16"/>
-        <image name="kurasel_icon_chevron-left" width="16" height="16"/>
+        <image name="chevron.left" catalog="system" width="48" height="64"/>
+        <image name="chevron.left.circle.fill" catalog="system" width="64" height="60"/>
+        <image name="chevron.right.circle.fill" catalog="system" width="64" height="60"/>
+        <image name="multiply" catalog="system" width="64" height="54"/>
         <image name="square.and.arrow.up" catalog="system" width="56" height="64"/>
     </resources>
 </document>

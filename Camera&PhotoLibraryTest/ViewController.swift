@@ -7,8 +7,12 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import Instantiate
+import InstantiateStandard
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, StoryboardInstantiatable {
     
     let disposeBag = DisposeBag()
     
@@ -22,11 +26,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var nextImageButton: UIButton!
     @IBOutlet weak var toCheckPageButton: UIButton!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         if imageView.image != nil {
             placeHolderMessageLabel.isHidden = true
@@ -38,8 +37,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setSwipeBack()
-        
+//        setSwipeBack()
+
         //other
         backButton.rx.tap.subscribe{ _ in
             self.navigationController?.popViewController(animated: true)

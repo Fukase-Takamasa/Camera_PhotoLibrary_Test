@@ -59,9 +59,11 @@ class ViewController: UIViewController, StoryboardInstantiatable {
         let actionSheet: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let tappedLibrary = UIAlertAction(title: "ライブラリから選択する", style: .default) { (UIAlertAction) in
             //ライブラリにアクセスする処理
+            self.showPhotoLibrary()
         }
         let tappedCamera = UIAlertAction(title: "カメラで撮影する", style: .default) { (UIAlertAction) in
             //カメラ起動する処理
+            self.showCamera()
         }
         let cancel = UIAlertAction(title: "キャンセル", style: .cancel) { (UIAlertAction) in
             //キャンセル
@@ -70,6 +72,48 @@ class ViewController: UIViewController, StoryboardInstantiatable {
         actionSheet.addAction(tappedCamera)
         actionSheet.addAction(cancel)
         self.present(actionSheet, animated: true, completion: nil)
+    }
+    
+}
+
+extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func showCamera() {
+        let sourceType: UIImagePickerController.SourceType = UIImagePickerController.SourceType.camera
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) {
+            let cameraPicker = UIImagePickerController()
+            cameraPicker.sourceType = sourceType
+            cameraPicker.delegate = self
+            self.present(cameraPicker, animated: true, completion: nil)
+        }else {
+            print("failed to start Camera")
+        }
+    }
+    
+    func showPhotoLibrary() {
+        let sourceType: UIImagePickerController.SourceType = UIImagePickerController.SourceType.photoLibrary
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary) {
+            let photoLibrary = UIImagePickerController()
+            photoLibrary.sourceType = sourceType
+            photoLibrary.delegate = self
+            self.present(photoLibrary, animated: true, completion: nil)
+            print("show photoLibrary")
+        }else {
+            print("failed to show photoLibrary")
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let pickedImage = info[.originalImage] as? UIImage {
+            imageView.image = pickedImage
+        }
+        picker.dismiss(animated: true, completion: nil)
+        print("picked image completed")
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+        print("canceled")
     }
     
 }

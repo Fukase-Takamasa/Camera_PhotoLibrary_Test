@@ -125,6 +125,7 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
             if picker.sourceType == .camera {
                 UIImageWriteToSavedPhotosAlbum(pickedImage, nil, nil, nil)
             }
+            updateImageCountLabel(collectionView)
             collectionView.reloadData()
         }
         picker.dismiss(animated: true, completion: nil)
@@ -276,6 +277,16 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         let cell = CollectionViewUtil.createCell(collectionView, identifier: CollectionViewCell.reusableIdentifier, indexPath) as! CollectionViewCell
         cell.imageView.image = selectedImages[indexPath.row]
         return cell
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        updateImageCountLabel(collectionView)
+    }
+    
+    func updateImageCountLabel(_ collectionView: UICollectionView) {
+        let contentsOffSetX: CGFloat = collectionView.contentOffset.x
+        let pageIndex = Int(round(contentsOffSetX / collectionView.frame.width))
+        photoCountLabel.text = "\(pageIndex + 1) / \(selectedImages.count)"
     }
     
     

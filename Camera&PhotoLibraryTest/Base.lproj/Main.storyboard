@@ -4,6 +4,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -77,6 +78,41 @@
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
                                                             </imageView>
+                                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="MGf-RQ-tW6">
+                                                                <rect key="frame" x="15" y="25" width="345" height="450"/>
+                                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="LtL-WP-c14">
+                                                                    <size key="itemSize" width="50" height="50"/>
+                                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                                </collectionViewFlowLayout>
+                                                                <cells>
+                                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="bAt-EC-19s">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="iNF-gu-INV">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                                            <autoresizingMask key="autoresizingMask"/>
+                                                                        </collectionViewCellContentView>
+                                                                    </collectionViewCell>
+                                                                </cells>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                        <real key="value" value="25"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                                        <color key="value" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                        <real key="value" value="2"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                                <connections>
+                                                                    <outlet property="dataSource" destination="45Y-zl-bhh" id="FHX-wz-hqn"/>
+                                                                    <outlet property="delegate" destination="45Y-zl-bhh" id="24E-0H-9Xz"/>
+                                                                </connections>
+                                                            </collectionView>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dcf-XJ-aCH" userLabel="PhotoCounBasetView">
                                                                 <rect key="frame" x="0.0" y="475" width="375" height="55"/>
                                                                 <subviews>
@@ -185,11 +221,15 @@
                                                             <constraint firstAttribute="trailing" secondItem="Dcf-XJ-aCH" secondAttribute="trailing" id="B9T-hV-jpl"/>
                                                             <constraint firstAttribute="height" constant="530" id="Bs3-Mj-i4z"/>
                                                             <constraint firstAttribute="trailing" secondItem="Tvg-hi-9ze" secondAttribute="trailing" constant="15" id="GFa-sJ-lh0"/>
+                                                            <constraint firstItem="MGf-RQ-tW6" firstAttribute="leading" secondItem="BT7-qb-AFa" secondAttribute="leading" constant="15" id="Kf2-PD-ojS"/>
+                                                            <constraint firstAttribute="trailing" secondItem="MGf-RQ-tW6" secondAttribute="trailing" constant="15" id="ONH-QN-Veg"/>
                                                             <constraint firstItem="0fJ-Zo-oKk" firstAttribute="centerY" secondItem="Tvg-hi-9ze" secondAttribute="centerY" id="WKx-Bh-lvg"/>
                                                             <constraint firstItem="5Iq-Be-Ydl" firstAttribute="centerX" secondItem="Tvg-hi-9ze" secondAttribute="centerX" id="bqv-T3-9gR"/>
+                                                            <constraint firstItem="MGf-RQ-tW6" firstAttribute="top" secondItem="BT7-qb-AFa" secondAttribute="top" constant="25" id="juC-ud-ISY"/>
                                                             <constraint firstItem="Tvg-hi-9ze" firstAttribute="top" secondItem="BT7-qb-AFa" secondAttribute="top" constant="25" id="nSQ-mN-Apo"/>
                                                             <constraint firstAttribute="bottom" secondItem="Dcf-XJ-aCH" secondAttribute="bottom" id="oCY-as-soW"/>
                                                             <constraint firstItem="Dcf-XJ-aCH" firstAttribute="top" secondItem="Tvg-hi-9ze" secondAttribute="bottom" id="sIF-tI-U1F"/>
+                                                            <constraint firstAttribute="bottom" secondItem="MGf-RQ-tW6" secondAttribute="bottom" constant="55" id="t8V-bt-g2I"/>
                                                         </constraints>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
@@ -306,6 +346,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="backButton" destination="Xpa-l5-8nU" id="uNf-No-m6o"/>
+                        <outlet property="collectionView" destination="MGf-RQ-tW6" id="Skm-oE-nqr"/>
                         <outlet property="imageView" destination="Tvg-hi-9ze" id="y1a-qX-h7V"/>
                         <outlet property="nextImageButton" destination="VRw-hg-zwB" id="6O2-9M-3dJ"/>
                         <outlet property="photoCountLabel" destination="7BB-ld-vzV" id="giq-LB-6kL"/>

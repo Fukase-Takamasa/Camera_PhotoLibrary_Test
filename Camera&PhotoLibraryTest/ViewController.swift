@@ -17,6 +17,7 @@ import AVFoundation
 class ViewController: UIViewController, StoryboardInstantiatable {
     
     let disposeBag = DisposeBag()
+    var selectedImages: [UIImage] = []
     
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var quitButton: UIButton!
@@ -27,19 +28,24 @@ class ViewController: UIViewController, StoryboardInstantiatable {
     @IBOutlet weak var previousImageButton: UIButton!
     @IBOutlet weak var nextImageButton: UIButton!
     @IBOutlet weak var toCheckPageButton: UIButton!
+    @IBOutlet weak var collectionView: UICollectionView!
     
-    override func viewWillAppear(_ animated: Bool) {
-        if imageView.image != nil {
-            placeHolderMessageLabel.isHidden = true
-        }else {
-            placeHolderMessageLabel.isHidden = false
-        }
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        if imageView.image != nil {
+//            placeHolderMessageLabel.isHidden = true
+//        }else {
+//            placeHolderMessageLabel.isHidden = false
+//        }
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        placeHolderMessageLabel.isHidden = true
+        
 //        setSwipeBack()
+        
+        CollectionViewUtil.registerCell(collectionView, identifier: CollectionViewCell.reusableIdentifier)
 
         //other
         backButton.rx.tap.subscribe{ _ in
@@ -113,8 +119,13 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[.originalImage] as? UIImage {
-            imageView.image = pickedImage
-            UIImageWriteToSavedPhotosAlbum(pickedImage, nil, nil, nil)
+            selectedImages.insert(pickedImage, at: 0)
+            //            imageView.image = selectedImages[0]
+            print("selectedImagesの中身: \(selectedImages)")
+            if picker.sourceType == .camera {
+                UIImageWriteToSavedPhotosAlbum(pickedImage, nil, nil, nil)
+            }
+            collectionView.reloadData()
         }
         picker.dismiss(animated: true, completion: nil)
         print("画像取得成功")
@@ -255,3 +266,63 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
 //            print("status: \(status)")
 //            showPhotoLibrary()
 //        }
+
+extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        selectedImages.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = CollectionViewUtil.createCell(collectionView, identifier: CollectionViewCell.reusableIdentifier, indexPath) as! CollectionViewCell
+        cell.imageView.image = selectedImages[indexPath.row]
+        return cell
+    }
+    
+    
+}
+
+
+extension ViewController: UICollectionViewDelegateFlowLayout {
+    //セクションの外側余白
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    }
+    
+    //セルサイズ
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let cellWidth = (self.collectionView.bounds.width)
+        let cellHeight = (self.collectionView.bounds.height)
+        return CGSize(width: cellWidth, height: cellHeight)
+    }
+    
+    //列間の余白（□□□
+    //
+    //　　　　　　□□□）
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    //行間の余白（□ ＜ー＞　□）？？
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+}
+
+
+
+
+
+import Foundation
+import UIKit
+
+open class CollectionViewUtil {
+    
+    static func registerCell(_ collectionView: UICollectionView, identifier: String) {
+        collectionView.register(UINib(nibName: identifier, bundle: nil), forCellWithReuseIdentifier: identifier)
+    }
+    
+    static func createCell(_ collectionView: UICollectionView, identifier: String, _ indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
+        return cell
+    }
+}

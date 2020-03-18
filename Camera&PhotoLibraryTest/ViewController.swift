@@ -124,25 +124,27 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
         
         if PHPhotoLibrary.authorizationStatus() != .authorized {
             //許可が必要なのでデフォのアラートを表示
+            print("許可が必要なのでデフォのアラートを表示")
             PHPhotoLibrary.requestAuthorization { status in
                 if status == .authorized {
-                    //許可されたのでフォトライブラリを表示
-                    print("許可されたのでフォトライブラリを表示")
+                    //デフォのアラートが許可されたのでフォトライブラリを表示
+                    print("デフォのアラートが許可されたのでフォトライブラリを表示")
                     self.showPhotoLibrary()
                 }else if status == .denied {
-                    //拒否されたので自作のアラートを表示して「設定」アプリから再設定してもらう
+                    //デフォのアラートが拒否されたので再設定用のダイアログを表示
+                    print("デフォのアラートが拒否されたので再設定用のダイアログを表示")
                     DispatchQueue.main.async {
-                        let alert = UIAlertController(title: "写真を撮る", message: "カメラを使用するためにアクセスを許可して下さい。", preferredStyle: .alert)
-                        let settingsAction = UIAlertAction(title: "許可", style: .default) { (UIAlertAction) in
+                        let alert = UIAlertController(title: "写真へのアクセスを許可", message: "写真へのアクセスを許可する必要があります。設定を変更して下さい。", preferredStyle: .alert)
+                        let settingsAction = UIAlertAction(title: "設定変更", style: .default) { (UIAlertAction) in
                             guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else {
-                                print("settingsURLが開ませんでした")
+                                print("settingsURLを開けませんでした")
                                 return
                             }
-                            print("自作アラートが許可されたので設定アプリを開きます")
+                            print("設定アプリを開きます")
                             UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
                         }
                         let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel) { (UIAlertAction) in
-                            print("自作アラートも拒否されたので閉じます")
+                            print("再設定用ダイアログも拒否されたので閉じます")
                         }
                         alert.addAction(settingsAction)
                         alert.addAction(cancelAction)

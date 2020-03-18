@@ -90,10 +90,10 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
                 cameraPicker.sourceType = sourceType
                 cameraPicker.delegate = self
                 self.present(cameraPicker, animated: true, completion: nil)
-                print("show camera")
+                print("カメラ起動")
             }
         }else {
-            print("failed to start Camera")
+            print("カメラ起動失敗")
         }
     }
     
@@ -106,10 +106,10 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
                 photoLibrary.sourceType = sourceType
                 photoLibrary.delegate = self
                 self.present(photoLibrary, animated: true, completion: nil)
-                print("show photoLibrary")
+                print("フォトライブラリ起動")
             }
         }else {
-            print("failed to show photoLibrary")
+            print("フォトライブラリ起動失敗")
         }
     }
     
@@ -118,18 +118,23 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
             imageView.image = pickedImage
         }
         picker.dismiss(animated: true, completion: nil)
-        print("picked image completed")
+        print("画像取得成功")
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
-        print("canceled")
+        print("キャンセル")
     }
     
     func checkPhotoLibraryAuthorization() {
-        if PHPhotoLibrary.authorizationStatus() != .authorized {
-            //許可が必要なのでデフォのアラートを表示
-            print("許可が必要なのでデフォのアラートを表示")
+        switch PHPhotoLibrary.authorizationStatus() {
+        case .authorized:
+            //既に許可済みなのでフォトライブラリを表示
+            print("既に許可済みなのでフォトライブラリを表示")
+            self.showPhotoLibrary()
+        case .notDetermined:
+            //まだ認証をしてないのでアクセスを求める
+            print("まだ認証をしてないのでアクセスを求める")
             PHPhotoLibrary.requestAuthorization { status in
                 if status == .authorized {
                     //デフォのアラートが許可されたのでフォトライブラリを表示
@@ -141,10 +146,15 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
                     self.requestPermissionForPhotoLibrary()
                 }
             }
-        }else {
-            //既に許可済みなのでフォトライブラリを表示
-            print("既に許可済みなのでフォトライブラリを表示")
-            self.showPhotoLibrary()
+        case .denied:
+            //デフォのアラートが拒否されているので再設定用のダイアログを表示
+            print("デフォのアラートが拒否されているので再設定用のダイアログを表示")
+            self.requestPermissionForPhotoLibrary()
+        case .restricted:
+            //システムによって拒否された、もしくはアルバムが存在しない
+            print("システムによって拒否された、もしくはアルバムが存在しない")
+        default:
+            print("何らかのエラー")
         }
     }
     
@@ -171,8 +181,8 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
             print("拒否されているので再設定用のダイアログを表示")
             self.requestPermissionForCamera()
         case .restricted:
-            //システムによって拒否された
-            print("システムによって拒否された")
+            //システムによって拒否された、もしくはカメラが存在しない
+            print("システムによって拒否された、もしくはカメラが存在しない")
         default:
             print("何らかのエラー")
         }

@@ -64,10 +64,8 @@ class ViewController: UIViewController, StoryboardInstantiatable {
             self.checkPhotoLibraryAuthorization()
         }
         let tappedCamera = UIAlertAction(title: "カメラで撮影する", style: .default) { (UIAlertAction) in
-            
+            //パーミッション確認
             self.checkCameraAuthorization()
-            //カメラ起動する処理
-//            self.showCamera()
         }
         let cancel = UIAlertAction(title: "キャンセル", style: .cancel) { (UIAlertAction) in
             //キャンセル

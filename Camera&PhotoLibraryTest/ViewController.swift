@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import Instantiate
 import InstantiateStandard
+import Photos
 
 class ViewController: UIViewController, StoryboardInstantiatable {
     
@@ -58,8 +59,8 @@ class ViewController: UIViewController, StoryboardInstantiatable {
     func showActionSheet() {
         let actionSheet: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let tappedLibrary = UIAlertAction(title: "ライブラリから選択する", style: .default) { (UIAlertAction) in
-            //ライブラリにアクセスする処理
-            self.showPhotoLibrary()
+            //パーミッション確認
+            self.requestAuthorizationOn()
         }
         let tappedCamera = UIAlertAction(title: "カメラで撮影する", style: .default) { (UIAlertAction) in
             //カメラ起動する処理
@@ -91,13 +92,16 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
     }
     
     func showPhotoLibrary() {
+        
         let sourceType: UIImagePickerController.SourceType = UIImagePickerController.SourceType.photoLibrary
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary) {
-            let photoLibrary = UIImagePickerController()
-            photoLibrary.sourceType = sourceType
-            photoLibrary.delegate = self
-            self.present(photoLibrary, animated: true, completion: nil)
-            print("show photoLibrary")
+            DispatchQueue.main.async {
+                let photoLibrary = UIImagePickerController()
+                photoLibrary.sourceType = sourceType
+                photoLibrary.delegate = self
+                self.present(photoLibrary, animated: true, completion: nil)
+                print("show photoLibrary")
+            }
         }else {
             print("failed to show photoLibrary")
         }
@@ -116,5 +120,68 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
         print("canceled")
     }
     
+    func requestAuthorizationOn() {
+        
+        if PHPhotoLibrary.authorizationStatus() != .authorized {
+            //許可が必要なのでデフォのアラートを表示
+            PHPhotoLibrary.requestAuthorization { status in
+                if status == .authorized {
+                    //許可されたのでフォトライブラリを表示
+                    print("許可されたのでフォトライブラリを表示")
+                    self.showPhotoLibrary()
+                }else if status == .denied {
+                    //拒否されたので自作のアラートを表示して「設定」アプリから再設定してもらう
+                    DispatchQueue.main.async {
+                        let alert = UIAlertController(title: "写真を撮る", message: "カメラを使用するためにアクセスを許可して下さい。", preferredStyle: .alert)
+                        let settingsAction = UIAlertAction(title: "許可", style: .default) { (UIAlertAction) in
+                            guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else {
+                                print("settingsURLが開ませんでした")
+                                return
+                            }
+                            print("自作アラートが許可されたので設定アプリを開きます")
+                            UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
+                        }
+                        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel) { (UIAlertAction) in
+                            print("自作アラートも拒否されたので閉じます")
+                        }
+                        alert.addAction(settingsAction)
+                        alert.addAction(cancelAction)
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
+            }
+        }else {
+            //既に許可済みなのでフォトライブラリを表示
+            print("既に許可済みなのでフォトライブラリを表示")
+            self.showPhotoLibrary()
+        }
+    }
+    
 }
 
+
+//        let status = PHPhotoLibrary.authorizationStatus()
+//        if status == PHAuthorizationStatus.denied {
+//            print("デフォアラートが拒否されたので自作アラートを表示します。")
+//            let alert = UIAlertController(title: "写真を撮る", message: "カメラを使用するためにアクセスを許可して下さい。", preferredStyle: .alert)
+//            let settingsAction = UIAlertAction(title: "許可", style: .default) { (UIAlertAction) in
+//                guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else {
+//                    print("settingsURLが開ませんでした")
+//                    return
+//                }
+//                print("自作アラートが許可されたので設定アプリを開きます")
+//                UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
+//            }
+//            let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel) { (UIAlertAction) in
+//                print("自作アラートも拒否されたので閉じます")
+//            }
+//            alert.addAction(settingsAction)
+//            alert.addAction(cancelAction)
+//            self.present(alert, animated: true, completion: nil)
+//        }else if status == PHAuthorizationStatus.authorized {
+//            print("デフォアラートが許可されました")
+//            showPhotoLibrary()
+//        }else {
+//            print("status: \(status)")
+//            showPhotoLibrary()
+//        }

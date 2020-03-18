@@ -114,6 +114,7 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[.originalImage] as? UIImage {
             imageView.image = pickedImage
+            UIImageWriteToSavedPhotosAlbum(pickedImage, nil, nil, nil)
         }
         picker.dismiss(animated: true, completion: nil)
         print("画像取得成功")

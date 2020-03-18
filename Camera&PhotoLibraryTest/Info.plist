@@ -2,10 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>写真を保存するには許可をして下さい。</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>写真を選択するには許可をしてください。</string>
+	<string>写真を選択するには許可をして下さい。</string>
 	<key>NSCameraUsageDescription</key>
-	<string>カメラを使用するには許可をしてください。</string>
+	<string>カメラを使用するには許可をして下さい。</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>

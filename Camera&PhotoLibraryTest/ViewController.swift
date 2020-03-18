@@ -12,6 +12,7 @@ import RxCocoa
 import Instantiate
 import InstantiateStandard
 import Photos
+import AVFoundation
 
 class ViewController: UIViewController, StoryboardInstantiatable {
     
@@ -60,11 +61,13 @@ class ViewController: UIViewController, StoryboardInstantiatable {
         let actionSheet: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let tappedLibrary = UIAlertAction(title: "ライブラリから選択する", style: .default) { (UIAlertAction) in
             //パーミッション確認
-            self.requestAuthorizationOn()
+            self.checkPhotoLibraryAuthorization()
         }
         let tappedCamera = UIAlertAction(title: "カメラで撮影する", style: .default) { (UIAlertAction) in
+            
+            self.checkCameraAuthorization()
             //カメラ起動する処理
-            self.showCamera()
+//            self.showCamera()
         }
         let cancel = UIAlertAction(title: "キャンセル", style: .cancel) { (UIAlertAction) in
             //キャンセル
@@ -82,10 +85,13 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
     func showCamera() {
         let sourceType: UIImagePickerController.SourceType = UIImagePickerController.SourceType.camera
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) {
-            let cameraPicker = UIImagePickerController()
-            cameraPicker.sourceType = sourceType
-            cameraPicker.delegate = self
-            self.present(cameraPicker, animated: true, completion: nil)
+            DispatchQueue.main.async {
+                let cameraPicker = UIImagePickerController()
+                cameraPicker.sourceType = sourceType
+                cameraPicker.delegate = self
+                self.present(cameraPicker, animated: true, completion: nil)
+                print("show camera")
+            }
         }else {
             print("failed to start Camera")
         }
@@ -120,8 +126,7 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
         print("canceled")
     }
     
-    func requestAuthorizationOn() {
-        
+    func checkPhotoLibraryAuthorization() {
         if PHPhotoLibrary.authorizationStatus() != .authorized {
             //許可が必要なのでデフォのアラートを表示
             print("許可が必要なのでデフォのアラートを表示")
@@ -133,29 +138,83 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
                 }else if status == .denied {
                     //デフォのアラートが拒否されたので再設定用のダイアログを表示
                     print("デフォのアラートが拒否されたので再設定用のダイアログを表示")
-                    DispatchQueue.main.async {
-                        let alert = UIAlertController(title: "写真へのアクセスを許可", message: "写真へのアクセスを許可する必要があります。設定を変更して下さい。", preferredStyle: .alert)
-                        let settingsAction = UIAlertAction(title: "設定変更", style: .default) { (UIAlertAction) in
-                            guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else {
-                                print("settingsURLを開けませんでした")
-                                return
-                            }
-                            print("設定アプリを開きます")
-                            UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
-                        }
-                        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel) { (UIAlertAction) in
-                            print("再設定用ダイアログも拒否されたので閉じます")
-                        }
-                        alert.addAction(settingsAction)
-                        alert.addAction(cancelAction)
-                        self.present(alert, animated: true, completion: nil)
-                    }
+                    self.requestPermissionForPhotoLibrary()
                 }
             }
         }else {
             //既に許可済みなのでフォトライブラリを表示
             print("既に許可済みなのでフォトライブラリを表示")
             self.showPhotoLibrary()
+        }
+    }
+    
+    func checkCameraAuthorization() {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .authorized:
+            //既に許可済みなのでカメラを表示
+            print("既に許可済みなのでカメラを表示")
+            self.showCamera()
+        case .notDetermined:
+            //まだ認証をしてないのでアクセスを求める
+            print("まだ認証をしてないのでアクセスを求める")
+            AVCaptureDevice.requestAccess(for: .video) { status in
+                if status {
+                    print("許可されたのでカメラを表示")
+                    self.showCamera()
+                }else {
+                    print("拒否されたので再設定用のダイアログを表示")
+                    self.requestPermissionForCamera()
+                }
+            }
+        case .denied:
+            //拒否されているので再設定用のダイアログを表示
+            print("拒否されているので再設定用のダイアログを表示")
+            self.requestPermissionForCamera()
+        case .restricted:
+            //システムによって拒否された
+            print("システムによって拒否された")
+        default:
+            print("何らかのエラー")
+        }
+    }
+    
+    func requestPermissionForCamera() {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: "カメラへのアクセスを許可", message: "カメラへのアクセスを許可する必要があります。設定を変更して下さい。", preferredStyle: .alert)
+            let settingsAction = UIAlertAction(title: "設定変更", style: .default) { (UIAlertAction) in
+                guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else {
+                    print("settingsURLを開けませんでした")
+                    return
+                }
+                print("設定アプリを開きます")
+                UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
+            }
+            let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel) { (UIAlertAction) in
+                print("再設定用ダイアログも拒否されたので閉じます")
+            }
+            alert.addAction(settingsAction)
+            alert.addAction(cancelAction)
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+
+    func requestPermissionForPhotoLibrary() {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: "写真へのアクセスを許可", message: "写真へのアクセスを許可する必要があります。設定を変更して下さい。", preferredStyle: .alert)
+            let settingsAction = UIAlertAction(title: "設定変更", style: .default) { (UIAlertAction) in
+                guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else {
+                    print("settingsURLを開けませんでした")
+                    return
+                }
+                print("設定アプリを開きます")
+                UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
+            }
+            let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel) { (UIAlertAction) in
+                print("再設定用ダイアログも拒否されたので閉じます")
+            }
+            alert.addAction(settingsAction)
+            alert.addAction(cancelAction)
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
